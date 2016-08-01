@@ -1,0 +1,9 @@
+{
+	"extends": "53js",
+	"env": {
+		"es6": true
+	},
+	"rules": {
+		"no-console": "off"
+	}
+}
