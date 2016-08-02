@@ -33,8 +33,64 @@ const logger = {
 		logger.show_date =
 			logger.show_time =
 				logger.show_type = !bool;
+	},
+
+	/* eslint-disable no-use-before-define */
+	get error() {
+		if (logger.log_level >= logger.ERROR) {
+			return log.bind(this, console.error, logger.ERROR);
+		}
+		return reject;
+	},
+
+	get warn() {
+		if (logger.log_level >= logger.WARN) {
+			return log.bind(this, console.warn, logger.WARN);
+		}
+		return reject;
+	},
+
+	get info() {
+		if (logger.log_level >= logger.INFO) {
+			return log.bind(this, console.info, logger.INFO);
+		}
+		return reject;
+	},
+
+	get verbose() {
+		if (logger.log_level >= logger.VERBOSE) {
+			return log.bind(this, console.log, logger.VERBOSE);
+		}
+		return reject;
+	},
+
+	get debug() {
+		if (logger.log_level >= logger.DEBUG) {
+			return log.bind(this, console.warn, logger.DEBUG);
+		}
+		return reject;
+	},
+
+	get silly() {
+		if (logger.log_level >= logger.SILLY) {
+			return log.bind(this, console.warn, logger.SILLY);
+		}
+		return reject;
 	}
+	/* eslint-enable no-use-before-define */
 };
+
+logger.ERROR = 0;
+logger.WARN = 1;
+logger.INFO = 2;
+logger.VERBOSE = 3;
+logger.DEBUG = 4; // Error stacktrace displayed at this level
+logger.SILLY = 5;
+
+logger.log_level = logger.ERROR;
+logger.show_date = true;
+logger.show_time = true;
+logger.show_type = true;
 
 function getDateString() {
 	var date = new Date();
@@ -111,52 +167,11 @@ function getFullLog(type, args) {
 	return result;
 }
 
-logger.ERROR = 0;
-logger.WARN = 1;
-logger.INFO = 2;
-logger.VERBOSE = 3;
-logger.DEBUG = 4; // Error stacktrace displayed at this level
-logger.SILLY = 5;
+function reject() {}
 
-logger.log_level = logger.ERROR;
-logger.show_date = true;
-logger.show_time = true;
-logger.show_type = true;
-
-logger.error = function error(/* str */) {
-	if (logger.log_level >= logger.ERROR) {
-		console.error.apply(console, getFullLog(logger.ERROR, Array.prototype.slice.call(arguments)));
-	}
-};
-
-logger.warn = function warn(/* str */) {
-	if (logger.log_level >= logger.WARN) {
-		console.warn.apply(console, getFullLog(logger.WARN, Array.prototype.slice.call(arguments)));
-	}
-};
-
-logger.info = function info(/* str */) {
-	if (logger.log_level >= logger.INFO) {
-		console.info.apply(console, getFullLog(logger.INFO, Array.prototype.slice.call(arguments)));
-	}
-};
-
-logger.verbose = function verbose(/* str */) {
-	if (logger.log_level >= logger.VERBOSE) {
-		console.log.apply(console, getFullLog(logger.VERBOSE, Array.prototype.slice.call(arguments)));
-	}
-};
-
-logger.debug = function debug(/* str */) {
-	if (logger.log_level >= logger.DEBUG) {
-		console.log.apply(console, getFullLog(logger.DEBUG, Array.prototype.slice.call(arguments)));
-	}
-};
-
-logger.silly = function silly(/* str */) {
-	if (logger.log_level >= logger.SILLY) {
-		console.log.apply(console, getFullLog(logger.SILLY, Array.prototype.slice.call(arguments)));
-	}
-};
+function log(consoleFunc, type) {
+	return consoleFunc.apply(console,
+		getFullLog(type, Array.prototype.slice.call(arguments, 2)));
+}
 
 module.exports = exports = logger;
