@@ -32,7 +32,7 @@ const logger = {
 	set browser(bool) {
 		logger.show_date =
 			logger.show_time =
-				logger.show_type = !!bool;
+				logger.show_type = !bool;
 	}
 };
 
