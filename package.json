@@ -1,6 +1,6 @@
 {
   "name": "logger-level",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "simple console utility to display log in console depending on log level",
   "main": "index.js",
   "scripts": {
