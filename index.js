@@ -27,6 +27,12 @@ const logger = {
 		case logger.SILLY: return 'silly';
 		default: return undefined;
 		}
+	},
+
+	set browser(bool) {
+		logger.show_date =
+			logger.show_time =
+				logger.show_type = !!bool;
 	}
 };
 
