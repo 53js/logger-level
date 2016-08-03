@@ -38,42 +38,42 @@ const logger = {
 	/* eslint-disable no-use-before-define */
 	get error() {
 		if (logger.log_level >= logger.ERROR) {
-			return log.bind(this, console.error, logger.ERROR);
+			return log.bind(this, console.error.bind(console), logger.ERROR);
 		}
 		return reject;
 	},
 
 	get warn() {
 		if (logger.log_level >= logger.WARN) {
-			return log.bind(this, console.warn, logger.WARN);
+			return log.bind(this, console.warn.bind(console), logger.WARN);
 		}
 		return reject;
 	},
 
 	get info() {
 		if (logger.log_level >= logger.INFO) {
-			return log.bind(this, console.info, logger.INFO);
+			return log.bind(this, console.info.bind(console), logger.INFO);
 		}
 		return reject;
 	},
 
 	get verbose() {
 		if (logger.log_level >= logger.VERBOSE) {
-			return log.bind(this, console.log, logger.VERBOSE);
+			return log.bind(this, console.log.bind(console), logger.VERBOSE);
 		}
 		return reject;
 	},
 
 	get debug() {
 		if (logger.log_level >= logger.DEBUG) {
-			return log.bind(this, console.warn, logger.DEBUG);
+			return log.bind(this, console.log.bind(console), logger.DEBUG);
 		}
 		return reject;
 	},
 
 	get silly() {
 		if (logger.log_level >= logger.SILLY) {
-			return log.bind(this, console.warn, logger.SILLY);
+			return log.bind(this, console.log.bind(console), logger.SILLY);
 		}
 		return reject;
 	}
