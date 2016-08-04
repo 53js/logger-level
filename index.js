@@ -1,6 +1,6 @@
 'use strict';
 
-const LEVEL = [
+var LEVEL = [
 	['ERROR', 0, console.error, 'error'],
 	['WARN', 1, console.warn, 'warn'],
 	['INFO', 2, console.info, 'info'],
@@ -9,7 +9,7 @@ const LEVEL = [
 	['SILLY', 5, console.log, 'silly']
 ];
 
-const config = {};
+var config = {};
 
 config.log_level = LEVEL[0];
 config.show_date = true;
@@ -54,7 +54,7 @@ function getTimeString() {
 }
 
 function getTypeString(level) {
-	let result = '';
+	var result = '';
 	switch (level[0]) {
 	case 'ERROR':
 		result = '\u001b[31;1m[error]\u001b[39;0m';
@@ -81,7 +81,7 @@ function getTypeString(level) {
 }
 
 function getPrefixString(level) {
-	let result = '';
+	var result = '';
 	if (config.show_date) {
 		result += getDateString() + ' ';
 	}
@@ -95,13 +95,13 @@ function getPrefixString(level) {
 }
 
 function getFullLog(level, args) {
-	let str = args[0];
+	var str = args[0];
+	var prefixString = getPrefixString(level);
+	var result = [];
 	args = args.slice(1);
-	let prefixString = getPrefixString(level);
 	str = (level[0] === LEVEL[0][0] && str && str.stack) ?
 			str.stack :
 			str;
-	let result = [];
 	if (prefixString) {
 		result.push(prefixString);
 	}
